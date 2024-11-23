@@ -1,14 +1,16 @@
 ---
-import Card from "../components/Card.astro";
-import Welcome from "../components/Welcome.astro";
-import Layout from "../layouts/Layout.astro";
-import { getPosts } from "../utils/sanity";
+import Card from "../components/Card.astro"
+import Welcome from "../components/Welcome.astro"
+import Layout from "../layouts/Layout.astro"
+import { getPosts } from "../utils/sanity"
 
-const posts = await getPosts();
+const posts = await getPosts()
+
+export const prerender = true
 ---
 
 <Layout title="Welcome to Astro.">
-  <section>
-    {posts.length ? posts.map((post) => <Card post={post} />) : <Welcome />}
-  </section>
+	<section>
+		{posts.length ? posts.map(post => <Card post={post} />) : <Welcome />}
+	</section>
 </Layout>
