@@ -2,7 +2,21 @@ import type { APIRoute } from "astro"
 
 export const POST: APIRoute = async ({ request }) => {
 	try {
+		// Обработка OPTIONS запроса
+		if (request.method === "OPTIONS") {
+			return new Response(null, {
+				status: 204,
+				headers: {
+					"Access-Control-Allow-Origin": "*",
+					"Access-Control-Allow-Methods": "POST, OPTIONS",
+					"Access-Control-Allow-Headers": "Content-Type",
+				},
+			})
+		}
+
+		// Обработка POST запроса
 		const { message, userId } = await request.json()
+
 		if (!message) {
 			return new Response(JSON.stringify({ error: "Message is required" }), {
 				status: 400,
@@ -14,6 +28,8 @@ export const POST: APIRoute = async ({ request }) => {
 		}
 
 		console.log("Добавление карточки с сообщением:", message)
+
+		// Ответ при успешном запросе
 		return new Response(
 			JSON.stringify({ success: true, message: "Карточка добавлена!" }),
 			{
