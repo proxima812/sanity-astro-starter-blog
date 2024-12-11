@@ -1,4 +1,5 @@
 // src/pages/api/card.ts (например)
+export const prerender = false
 import type { APIRoute } from "astro"
 
 export const POST: APIRoute = async ({ request }) => {
