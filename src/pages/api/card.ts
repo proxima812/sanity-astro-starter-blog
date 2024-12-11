@@ -1,13 +1,9 @@
+// src/pages/api/card.ts (например)
 import type { APIRoute } from "astro"
 
-export const GET: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request }) => {
 	try {
-		// Получаем параметры из строки запроса
-		const url = new URL(request.url)
-		const message = url.searchParams.get("message")
-		const userId = url.searchParams.get("userId")
-
-		// Проверяем, что сообщение присутствует
+		const { message, userId } = await request.json()
 		if (!message) {
 			return new Response(JSON.stringify({ error: "Message is required" }), {
 				status: 400,
@@ -18,9 +14,7 @@ export const GET: APIRoute = async ({ request }) => {
 			})
 		}
 
-		// Логируем сообщение
 		console.log("Добавление карточки с сообщением:", message)
-
 		return new Response(
 			JSON.stringify({ success: true, message: "Карточка добавлена!" }),
 			{
