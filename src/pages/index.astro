@@ -7,9 +7,23 @@ import { getPosts } from "../utils/sanity"
 const posts = await getPosts()
 
 export const prerender = false
+
+import { POST } from "./api/card.ts"
+
+let response = await POST(Astro)
+const data = await response.json()
 ---
 
 <Layout title="Welcome to Astro.">
+	{
+		data &&
+			data.map(item => (
+				<div>
+					{item.message} / {item}
+				</div>
+			))
+	}
+
 	<section>
 		{posts.length ? posts.map(post => <Card post={post} />) : <Welcome />}
 	</section>
